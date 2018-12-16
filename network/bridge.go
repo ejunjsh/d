@@ -63,7 +63,7 @@ func (d *BridgeNetworkDriver) Disconnect(network Network, endpoint *Endpoint) er
 	return nil
 }
 
-func (d *BridgeNetworkDriver) deleteBridge(n *Network) error {
+func (d *BridgeNetworkDriver) Delete(n *Network) error {
 	bridgeName := n.Name
 
 	// get the link

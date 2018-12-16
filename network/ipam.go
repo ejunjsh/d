@@ -14,6 +14,10 @@ type IPAM struct {
 	Subnets             *map[string]string
 }
 
+var ipAllocator = &IPAM{
+	SubnetAllocatorPath: "/var/run/d/network/ipam/subnet.json",
+}
+
 func (ipam *IPAM) load() error {
 	if _, err := os.Stat(ipam.SubnetAllocatorPath); err != nil {
 		if os.IsNotExist(err) {
