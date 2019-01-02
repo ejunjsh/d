@@ -10,7 +10,6 @@ import (
 
 //Create a AUFS filesystem as container root workspace
 func NewWorkSpace(volume, imageName, containerName string) {
-	CreateReadOnlyLayer(imageName)
 	CreateWriteLayer(containerName)
 	CreateMountPoint(containerName, imageName)
 	if volume != "" {
@@ -23,29 +22,6 @@ func NewWorkSpace(volume, imageName, containerName string) {
 			log.Infof("Volume parameter input is not correct.")
 		}
 	}
-}
-
-//Decompression tar image
-func CreateReadOnlyLayer(imageName string) error {
-	unTarFolderUrl := RootUrl + "/" + imageName + "/"
-	imageUrl := RootUrl + "/" + imageName + ".tar"
-	exist, err := PathExists(unTarFolderUrl)
-	if err != nil {
-		log.Infof("Fail to judge whether dir %s exists. %v", unTarFolderUrl, err)
-		return err
-	}
-	if !exist {
-		if err := os.MkdirAll(unTarFolderUrl, 0622); err != nil {
-			log.Errorf("Mkdir %s error %v", unTarFolderUrl, err)
-			return err
-		}
-
-		if _, err := exec.Command("tar", "-xvf", imageUrl, "-C", unTarFolderUrl).CombinedOutput(); err != nil {
-			log.Errorf("Untar dir %s error %v", unTarFolderUrl, err)
-			return err
-		}
-	}
-	return nil
 }
 
 func CreateWriteLayer(containerName string) {
@@ -82,9 +58,10 @@ func CreateMountPoint(containerName, imageName string) error {
 		return err
 	}
 	tmpWriteLayer := fmt.Sprintf(WriteLayerUrl, containerName)
-	tmpImageLocation := RootUrl + "/" + imageName
+	tmpImageLocation := RootUrl + "i/" + imageName
 	mntURL := fmt.Sprintf(MntUrl, containerName)
 	dirs := "dirs=" + tmpWriteLayer + ":" + tmpImageLocation
+	log.Info(dirs)
 	_, err := exec.Command("mount", "-t", "aufs", "-o", dirs, "none", mntURL).CombinedOutput()
 	if err != nil {
 		log.Errorf("Run command for creating mount point failed %v", err)

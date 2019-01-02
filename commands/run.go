@@ -21,7 +21,7 @@ var RunCommand = cli.Command{
 	Usage: `Create a container with namespace and cgroups limit ie: mydocker run -ti [image] [command]`,
 	Flags: []cli.Flag{
 		cli.BoolFlag{
-			Name:  "ti",
+			Name:  "i",
 			Usage: "enable tty",
 		},
 		cli.BoolFlag{
@@ -74,7 +74,7 @@ var RunCommand = cli.Command{
 		imageName := cmdArray[0]
 		cmdArray = cmdArray[1:]
 
-		createTty := context.Bool("ti")
+		createTty := context.Bool("i")
 		detach := context.Bool("d")
 
 		if createTty && detach {
