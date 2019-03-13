@@ -3,6 +3,7 @@ package main
 import (
 	log "github.com/Sirupsen/logrus"
 	. "github.com/ejunjsh/d/commands"
+	_ "github.com/ejunjsh/d/nsenter"
 	"github.com/urfave/cli"
 	"os"
 	"runtime"
