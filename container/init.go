@@ -21,6 +21,8 @@ func RunContainerInitProcess() error {
 
 	setUpMount()
 
+	syscall.Sethostname([]byte(os.Getenv(CONTAINERNAME)))
+
 	path, err := exec.LookPath(cmdArray[0])
 	if err != nil {
 		log.Errorf("Exec loop path error %v", err)

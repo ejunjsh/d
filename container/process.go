@@ -31,6 +31,8 @@ type ContainerInfo struct {
 	PortMapping []string `json:"portmapping"` //端口映射
 }
 
+const CONTAINERNAME = "CONTAINERNAME"
+
 func NewParentProcess(tty bool, containerName, volume, imageName string, envSlice []string) (*exec.Cmd, *os.File) {
 	readPipe, writePipe, err := NewPipe()
 	if err != nil {
@@ -69,6 +71,7 @@ func NewParentProcess(tty bool, containerName, volume, imageName string, envSlic
 	}
 
 	cmd.ExtraFiles = []*os.File{readPipe}
+	os.Setenv(CONTAINERNAME, containerName)
 	cmd.Env = append(os.Environ(), envSlice...)
 	NewWorkSpace(volume, imageName, containerName)
 	cmd.Dir = fmt.Sprintf(MntUrl, containerName)
