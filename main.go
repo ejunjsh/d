@@ -13,7 +13,7 @@ func init() {
 	runtime.LockOSThread()
 }
 
-const usage = `d is a simple container runtime implementation.
+const usage = `is a simple container runtime implementation.
 			   The purpose of this project is to learn how docker works and how to write a docker by ourselves
 			   Enjoy it, just for fun.`
 
@@ -29,6 +29,7 @@ func main() {
 		ExecCommand,
 		RemoveCommand,
 		NetworkCommand,
+		InstallCommand,
 	}
 
 	app.Before = func(context *cli.Context) error {
