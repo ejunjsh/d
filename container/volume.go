@@ -67,6 +67,8 @@ func CreateMountPoint(containerName, imageName string) error {
 		log.Errorf("Run command for creating mount point failed %v", err)
 		return err
 	}
+
+	_, err = exec.Command("mount", "--bind", "/etc/resolv.conf", mntURL+"/etc/resolv.conf").CombinedOutput()
 	return nil
 }
 
@@ -85,7 +87,8 @@ func DeleteWorkSpace(volume, containerName string) {
 
 func DeleteMountPoint(containerName string) error {
 	mntURL := fmt.Sprintf(MntUrl, containerName)
-	_, err := exec.Command("umount", mntURL).CombinedOutput()
+	_, err := exec.Command("umount", mntURL+"/etc/resolv.conf").CombinedOutput()
+	_, err = exec.Command("umount", mntURL).CombinedOutput()
 	if err != nil {
 		log.Errorf("Unmount %s error %v", mntURL, err)
 		return err

@@ -161,12 +161,22 @@ func setInterfaceIP(name string, rawIP string) error {
 }
 
 func setupIPTables(bridgeName string, subnet *net.IPNet) error {
-	iptablesCmd := fmt.Sprintf("-t nat -A POSTROUTING -s %s ! -o %s -j MASQUERADE", subnet.String(), bridgeName)
+	r, err := netlink.RouteList(nil, -1)
+	i, err := netlink.LinkByIndex(r[0].LinkIndex)
+	iptablesCmd := fmt.Sprintf("-t nat -A POSTROUTING -s %s -o %s -j MASQUERADE", subnet.String(), i.Attrs().Name)
+	fmt.Println(iptablesCmd)
 	cmd := exec.Command("iptables", strings.Split(iptablesCmd, " ")...)
 	//err := cmd.Run()
 	output, err := cmd.Output()
 	if err != nil {
 		log.Errorf("iptables Output, %v", output)
 	}
+
+	iptablesCmd = fmt.Sprintf("-A FORWARD -i %s -o %s -j ACCEPT", bridgeName, i.Attrs().Name)
+	exec.Command("iptables", strings.Split(iptablesCmd, " ")...).CombinedOutput()
+	fmt.Println(iptablesCmd)
+	iptablesCmd = fmt.Sprintf("-A FORWARD -i %s -o %s -j ACCEPT", i.Attrs().Name, bridgeName)
+	exec.Command("iptables", strings.Split(iptablesCmd, " ")...).CombinedOutput()
+	fmt.Println(iptablesCmd)
 	return err
 }
