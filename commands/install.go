@@ -10,7 +10,7 @@ import (
 
 var InstallCommand = cli.Command{
 	Name:  "install",
-	Usage: "install an image",
+	Usage: "install an image into d",
 	Action: func(context *cli.Context) error {
 		return installImage(context)
 	},
