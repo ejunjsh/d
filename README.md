@@ -7,7 +7,11 @@ my docker container practice
 
 ## precondition
 
-you need to install docker first
+you need to install `docker`  and `iptables` commandline tools
+
+enable ip forwarding 
+
+    sysctl net.ipv4.conf.all.forwarding=1
 
 ## install
 
@@ -45,7 +49,7 @@ you need to install docker first
 
 notice: this example is run at `Ubuntu 18.04.2 LTS` and the `d` is tested in this environment only. 
 
-i don't sure if `d` is compatible all the linux distribution.
+I'm not sure if `d` is compatible all the linux distribution.
 
 ### create nginx container
 
