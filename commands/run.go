@@ -18,7 +18,7 @@ import (
 
 var RunCommand = cli.Command{
 	Name:  "run",
-	Usage: `Create a container with namespace and cgroups limit ie: mydocker run -i [image] [command]`,
+	Usage: `Create a container with namespace and cgroups limit ie: d run -i [image] [command]`,
 	Flags: []cli.Flag{
 		cli.BoolFlag{
 			Name:  "i",

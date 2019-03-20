@@ -15,7 +15,7 @@ type IPAM struct {
 }
 
 var ipAllocator = &IPAM{
-	SubnetAllocatorPath: "/var/run/d/network/ipam/subnet.json",
+	SubnetAllocatorPath: "/var/lib/d/n/subnet.json",
 }
 
 func (ipam *IPAM) load() error {

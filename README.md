@@ -32,7 +32,7 @@ enable ip forwarding
     
     COMMANDS:
          init     Init container process run user's process in container. Do not call it outside
-         run      Create a container with namespace and cgroups limit ie: mydocker run -i [image] [command]
+         run      Create a container with namespace and cgroups limit ie: d run -ti [image] [command]
          ps       list all the containers
          exec     exec a command into container
          rm       remove unused containers

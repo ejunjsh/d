@@ -12,7 +12,6 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"text/tabwriter"
 )
@@ -24,7 +23,7 @@ type Network struct {
 }
 
 var (
-	defaultNetworkPath = "/var/run/mydocker/network/network/"
+	defaultNetworkPath = "/var/lib/d/n/"
 	drivers            = map[string]NetworkDriver{}
 	networks           = map[string]*Network{}
 )
@@ -182,7 +181,6 @@ func enterContainerNetns(enLink *netlink.Link, cinfo *container.ContainerInfo) f
 	}
 
 	nsFD := f.Fd()
-	runtime.LockOSThread()
 
 	// 修改veth peer 另外一端移到容器的namespace中
 	if err = netlink.LinkSetNsFd(*enLink, int(nsFD)); err != nil {
@@ -202,7 +200,6 @@ func enterContainerNetns(enLink *netlink.Link, cinfo *container.ContainerInfo) f
 	return func() {
 		netns.Set(origns)
 		origns.Close()
-		runtime.UnlockOSThread()
 		f.Close()
 	}
 }
