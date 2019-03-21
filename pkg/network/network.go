@@ -252,7 +252,7 @@ func configPortMapping(ep *Endpoint, cinfo *container.ContainerInfo) error {
 		iptablesCmd := fmt.Sprintf("-t nat -A PREROUTING -p tcp -m tcp --dport %s -j DNAT --to-destination %s:%s",
 			portMapping[0], ep.IPAddress.String(), portMapping[1])
 		cmd := exec.Command("iptables", strings.Split(iptablesCmd, " ")...)
-		//err := cmd.Run()
+		//err := cmds.Run()
 		output, err := cmd.Output()
 		if err != nil {
 			logrus.Errorf("iptables Output, %v", output)

@@ -15,7 +15,7 @@ enable ip forwarding
 
 ## install
 
-    go get github.com/ejunjsh/d
+    go get github.com/ejunjsh/d/cmds/d
    
 ## usage
 
