@@ -2,7 +2,7 @@ package cgroups
 
 import (
 	log "github.com/Sirupsen/logrus"
-	"github.com/ejunjsh/d/cgroups/subsystems"
+	"github.com/ejunjsh/d/pkg/cgroups/subsystems"
 )
 
 type CgroupManager struct {

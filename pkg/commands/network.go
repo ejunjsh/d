@@ -2,7 +2,7 @@ package commands
 
 import (
 	"fmt"
-	"github.com/ejunjsh/d/network"
+	"github.com/ejunjsh/d/pkg/network"
 	"github.com/urfave/cli"
 )
 
