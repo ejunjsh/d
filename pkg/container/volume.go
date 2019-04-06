@@ -33,17 +33,18 @@ func CreateWriteLayer(containerName string) {
 
 func MountVolume(volumeURLs []string, containerName string) error {
 	parentUrl := volumeURLs[0]
-	if err := os.Mkdir(parentUrl, 0777); err != nil {
-		log.Infof("Mkdir parent dir %s error. %v", parentUrl, err)
+	if err := os.MkdirAll(parentUrl, 0777); err != nil {
+		log.Errorf("Mkdir parent dir %s error. %v", parentUrl, err)
+		return err
 	}
 	containerUrl := volumeURLs[1]
 	mntURL := fmt.Sprintf(MntUrl, containerName)
 	containerVolumeURL := mntURL + "/" + containerUrl
-	if err := os.Mkdir(containerVolumeURL, 0777); err != nil {
-		log.Infof("Mkdir container dir %s error. %v", containerVolumeURL, err)
+	if err := os.MkdirAll(containerVolumeURL, 0777); err != nil {
+		log.Errorf("Mkdir container dir %s error. %v", containerVolumeURL, err)
+		return err
 	}
-	dirs := "dirs=" + parentUrl
-	_, err := exec.Command("mount", "-t", "aufs", "-o", dirs, "none", containerVolumeURL).CombinedOutput()
+	_, err := exec.Command("mount", "--bind", parentUrl, containerVolumeURL).CombinedOutput()
 	if err != nil {
 		log.Errorf("Mount volume failed. %v", err)
 		return err

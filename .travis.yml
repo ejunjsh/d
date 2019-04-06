@@ -4,4 +4,4 @@ go:
   - 1.8
 
 script:
-  - go install github.com/ejunjsh/d/cmds/d
+  - go install github.com/ejunjsh/d/cmd/d
